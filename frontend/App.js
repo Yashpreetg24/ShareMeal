@@ -1,7 +1,10 @@
 import React from 'react';
-import { Provider as PaperProvider, DefaultTheme, configureFonts } from 'react-native-paper';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SplashScreen from './src/SplashScreen.jsx';
 import VolunteerDashboard from './src/Volunteer/components/VolunteerDashboard';
 
 // Configure the theme
@@ -19,15 +22,20 @@ const theme = {
   roundness: 8,
 };
 
-function App() {
+const Stack = createNativeStackNavigator();
+
+export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
         <StatusBar style="auto" />
-        <VolunteerDashboard />
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Volunteer" component={VolunteerDashboard} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </PaperProvider>
     </SafeAreaProvider>
   );
 }
-
-export default App;
