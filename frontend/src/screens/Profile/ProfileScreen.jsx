@@ -1,15 +1,39 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '../../context/AuthContext';
 
 const ProfileScreen = () => {
-    const userData = {
+    const { user, logout } = useAuth();
+
+    // Use user data from auth context, fallback to default if not available
+    const userData = user || {
         name: 'John Doe',
         email: 'john.doe@example.com',
         phone: '+1 234 567 8900',
         location: 'New York, USA',
         donationsCount: 12,
         volunteerHours: 24,
+    };
+
+    const handleLogout = () => {
+        Alert.alert(
+            'Logout',
+            'Are you sure you want to logout?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Logout',
+                    style: 'destructive',
+                    onPress: async () => {
+                        await logout();
+                    },
+                },
+            ]
+        );
     };
 
     return (
@@ -64,6 +88,10 @@ const ProfileScreen = () => {
                     
                     <TouchableOpacity style={styles.settingsButton}>
                         <Text style={styles.settingsButtonText}>Settings</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                        <Text style={styles.logoutButtonText}>Logout</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -200,6 +228,23 @@ const styles = StyleSheet.create({
     },
     settingsButtonText: {
         color: '#1ABC9C',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    logoutButton: {
+        backgroundColor: '#f44336',
+        paddingVertical: 14,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 12,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    logoutButtonText: {
+        color: '#fff',
         fontSize: 16,
         fontWeight: '600',
     },

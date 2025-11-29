@@ -2,9 +2,20 @@ import React from "react";
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Dimensions, } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "../../context/AuthContext";
 const { height } = Dimensions.get("window");
 
 export default function SplashScreen({ navigation }) {
+    const { isAuthenticated } = useAuth();
+
+    const handleNavigate = () => {
+        if (isAuthenticated) {
+            navigation.navigate("Main");
+        } else {
+            navigation.navigate("Login");
+        }
+    };
+
     return (
         <View style={styles.container}>
             <ImageBackground source={require("../../../assets/splashImage.png")} style={styles.bg} resizeMode="cover" >
@@ -12,7 +23,7 @@ export default function SplashScreen({ navigation }) {
                 <View style={styles.bottomContainer}>
                     <Text style={styles.appName}>ShareMeal</Text>
                     <Text style={styles.tagline}>Together, We Feed Hope.</Text>
-                    <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate("Main")}>
+                    <TouchableOpacity style={styles.nextButton} onPress={handleNavigate}>
                         <Ionicons name="chevron-forward" size={30} color="#fff" />
                     </TouchableOpacity>
                 </View>

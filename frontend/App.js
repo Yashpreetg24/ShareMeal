@@ -4,7 +4,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
 import SplashScreen from './src/screens/Splash/SplashScreen.jsx';
+import LoginScreen from './src/screens/Login/LoginScreen.jsx';
 import TabNavigator from './src/navigation/TabNavigator';
 import CreateDonationForm from './src/screens/Donate/CreateDonationForm.jsx';
 
@@ -32,19 +34,36 @@ const theme = {
 
 const Stack = createNativeStackNavigator();
 
+const AppNavigator = () => {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return null; // Or a loading screen
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator 
+        screenOptions={{ headerShown: false }}
+        initialRouteName="Splash"
+      >
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Main" component={TabNavigator} />
+        <Stack.Screen name="CreateDonationForm" component={CreateDonationForm} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
 export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
         <StatusBar style="auto" />
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Splash" component={SplashScreen} />
-            <Stack.Screen name="Main" component={TabNavigator} />
-            <Stack.Screen name="CreateDonationForm" component={CreateDonationForm} />
-
-          </Stack.Navigator>
-        </NavigationContainer>
+        <AuthProvider>
+          <AppNavigator />
+        </AuthProvider>
       </PaperProvider>
     </SafeAreaProvider>
   );
