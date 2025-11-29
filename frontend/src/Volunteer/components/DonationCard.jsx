@@ -16,14 +16,13 @@ const DonationCard = ({ donation, onAccept, onPress, isAccepted = false }) => {
     isVeg,
     isPackaged
   } = donation;
-
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
           {foodImage ? (
             <Image
-              source={{ uri: foodImage }}
+              source={typeof foodImage === 'string' ? { uri: foodImage } : foodImage}
               style={styles.foodImage}
               resizeMode="cover"
             />
@@ -95,7 +94,7 @@ const DonationCard = ({ donation, onAccept, onPress, isAccepted = false }) => {
             </Text>
           )}
         </View>
-      </View>
+      </View >
 
       <Card.Actions style={styles.cardActions}>
         <Button
@@ -111,7 +110,7 @@ const DonationCard = ({ donation, onAccept, onPress, isAccepted = false }) => {
           {isAccepted ? 'Accepted' : 'Accept Donation'}
         </Button>
       </Card.Actions>
-    </Card>
+    </Card >
   );
 };
 

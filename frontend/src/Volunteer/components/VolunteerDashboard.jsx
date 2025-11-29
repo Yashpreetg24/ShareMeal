@@ -17,6 +17,11 @@ import FilterSection from './FilterSection';
 import DashboardTabs from './DashboardTabs';
 import MyTaskCard from './MyTaskCard';
 
+// Import local images
+import food1 from '../../../assets/food1.jpg'; // Biryani
+import food2 from '../../../assets/food2.jpg'; // Chapati & Sabzi
+import food3 from '../../../assets/food3.webp'; // Sandwiches
+
 // Mock data
 const mockDonations = [
   {
@@ -33,7 +38,7 @@ const mockDonations = [
     meals: 10,
     isVeg: true,
     isPackaged: true,
-    foodImage: 'https://source.unsplash.com/random/300x200/?food,indian',
+    foodImage: food2,
     createdAt: new Date('2023-11-28T10:30:00'),
     distance: 1.2, // in km
   },
@@ -51,7 +56,7 @@ const mockDonations = [
     meals: 16,
     isVeg: false,
     isPackaged: false,
-    foodImage: 'https://source.unsplash.com/random/300x200/?biryani',
+    foodImage: food1,
     createdAt: new Date('2023-11-28T11:45:00'),
     distance: 2.5,
   },
@@ -69,7 +74,7 @@ const mockDonations = [
     meals: 15,
     isVeg: true,
     isPackaged: true,
-    foodImage: 'https://source.unsplash.com/random/300x200/?sandwich,fruit',
+    foodImage: food3,
     createdAt: new Date('2023-11-28T14:20:00'),
     distance: 3.1,
   },

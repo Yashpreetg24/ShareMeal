@@ -8,7 +8,7 @@ const MyTaskCard = ({ donation, onComplete }) => {
         <Surface style={styles.taskCard} elevation={2}>
             <View style={styles.taskImageContainer}>
                 {donation.foodImage ? (
-                    <Image source={{ uri: donation.foodImage }} style={styles.taskImage} />
+                    <Image source={typeof donation.foodImage === 'string' ? { uri: donation.foodImage } : donation.foodImage} style={styles.taskImage} />
                 ) : (
                     <View style={[styles.taskImage, styles.placeholderImage]}>
                         <MaterialIcons name="fastfood" size={40} color="#9e9e9e" />

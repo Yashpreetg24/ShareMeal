@@ -58,7 +58,7 @@ const DonationDetails = ({ visible, onDismiss, donation, onAccept }) => {
           <View style={styles.imageContainer}>
             {foodImage ? (
               <Image
-                source={{ uri: foodImage }}
+                source={typeof foodImage === 'string' ? { uri: foodImage } : foodImage}
                 style={styles.image}
                 resizeMode="cover"
               />
